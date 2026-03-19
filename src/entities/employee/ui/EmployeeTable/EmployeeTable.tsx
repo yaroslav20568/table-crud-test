@@ -3,12 +3,14 @@ import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { Button, Space } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 
-import { employeesData } from '@/entities/employee/const';
-import type { IEmployee } from '@/entities/employee/model';
+import { useEmployees } from '@/entities/employee/lib';
+import { type IEmployee } from '@/entities/employee/model';
 
 import { CustomTable, DateUtils } from '@/shared';
 
 export const EmployeeTable = () => {
+  const { employees, deleteEmployee } = useEmployees();
+
   const columns: ColumnsType<IEmployee> = useMemo(() => {
     return [
       {
@@ -56,15 +58,13 @@ export const EmployeeTable = () => {
               type="text"
               danger
               icon={<DeleteOutlined />}
-              onClick={() => console.log('Delete', record.id)}
+              onClick={() => deleteEmployee(record.id)}
             />
           </Space>
         )
       }
     ];
-  }, []);
+  }, [deleteEmployee]);
 
-  return (
-    <CustomTable<IEmployee> dataSource={employeesData} columns={columns} />
-  );
+  return <CustomTable<IEmployee> dataSource={employees} columns={columns} />;
 };
