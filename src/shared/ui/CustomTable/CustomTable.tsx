@@ -1,13 +1,16 @@
-import { type Key, useState } from 'react';
+import { useState } from 'react';
 import { Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
+
+import { withMemo } from '@/shared/utils';
 
 interface IProps<T> {
   dataSource: Array<T>;
   columns: ColumnsType<T>;
 }
 
-export const CustomTable = <T extends { id: Key }>({
+// eslint-disable-next-line react-refresh/only-export-components
+const CustomTableComponent = <T extends Record<string, any>>({
   dataSource,
   columns
 }: IProps<T>) => {
@@ -30,3 +33,5 @@ export const CustomTable = <T extends { id: Key }>({
     />
   );
 };
+CustomTableComponent.displayName = 'CustomTable';
+export const CustomTable = withMemo(CustomTableComponent);
