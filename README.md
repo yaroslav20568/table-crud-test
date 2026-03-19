@@ -1,73 +1,61 @@
-# React + TypeScript + Vite
+# Table CRUD Test
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Тестовое приложение для управления данными в таблице с возможностью создания, чтения, обновления и удаления записей (CRUD).
 
-Currently, two official plugins are available:
+## 🛠 Технологический стек
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Frontend:** React (Vite)
+- **Язык:** TypeScript / JavaScript
+- **Стилизация:** CSS Modules / SCSS (или укажи свой вариант, например Tailwind)
+- **Состояние:** React Hooks (useState, useEffect)
+- **Линтинг и форматирование:**
+  - **ESLint** — для поиска ошибок и поддержания чистоты кода.
+  - **Prettier** — для единообразного форматирования кода.
 
-## React Compiler
+## 🚀 Как запустить проект
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1.  **Клонируйте репозиторий:**
 
-## Expanding the ESLint configuration
+    ```bash
+    git clone https://github.com
+    cd table-crud-test
+    ```
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+2.  **Установите зависимости:**
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+    ```bash
+    npm install
+    ```
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked
+3.  **Запустите проект в режиме разработки:**
+    ```bash
+    npm run dev
+    ```
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname
-      }
-      // other options...
-    }
-  }
-]);
-```
+## 🧹 Качество кода (ESLint & Prettier)
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+В проекте настроены инструменты для автоматической проверки и форматирования кода.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x';
-import reactDom from 'eslint-plugin-react-dom';
+- **Проверка линтером:**
+  ```bash
+  npm run lint
+  ```
+- **Автоматическое исправление ошибок форматирования:**
+  ```bash
+  npm run format
+  ```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname
-      }
-      // other options...
-    }
-  }
-]);
-```
+## 📂 Структура проекта
+
+- `src/components` — переиспользуемые UI-компоненты (таблица, формы, кнопки).
+- `src/hooks` — кастомные хуки для логики CRUD.
+- `src/utils` — вспомогательные функции.
+- `.eslintrc.js` — конфигурация правил ESLint.
+- `.prettierrc` — настройки форматирования Prettier.
+
+## 📝 Основной функционал
+
+- [x] Отображение данных в таблице.
+- [x] Добавление новых строк через форму.
+- [x] Редактирование существующих записей.
+- [x] Удаление данных.

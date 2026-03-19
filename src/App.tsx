@@ -4,12 +4,12 @@ import dayjs from 'dayjs';
 
 import { MainLayout } from '@/app';
 
+import { EmployeeForm, type IEmployeeFormValues } from '@/features';
+
 import {
-  EmployeeForm,
   EmployeeTable,
   EmployeeToolbar,
   type IEmployee,
-  type IEmployeeFormValues,
   useEmployees
 } from '@/entities';
 
