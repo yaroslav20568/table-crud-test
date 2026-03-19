@@ -2,13 +2,16 @@ import { MainLayout } from '@/app';
 
 import { EmployeeTable } from '@/entities';
 
+import { TitleLayout } from './shared';
+
 import '@/app/styles';
 
 const App = () => {
   return (
     <MainLayout>
-      <h1>Employees</h1>
-      <EmployeeTable />
+      <TitleLayout title="Employees">
+        <EmployeeTable />
+      </TitleLayout>
     </MainLayout>
   );
 };
