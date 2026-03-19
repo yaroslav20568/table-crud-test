@@ -36,7 +36,6 @@ const CustomTableComponent = <T extends Record<string, any>>({
           setPageSize(size);
         }
       }}
-      scroll={{ x: 850 }}
       className={s.customTable}
     />
   );

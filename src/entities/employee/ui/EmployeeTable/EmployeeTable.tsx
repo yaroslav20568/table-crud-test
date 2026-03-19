@@ -1,6 +1,6 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { Button, Space } from 'antd';
+import { Button, Modal, Space } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 
 import { type IEmployee } from '@/entities/employee/model';
@@ -18,6 +18,22 @@ export const EmployeeTable = ({
   onEditEmployee,
   onDeleteEmployee
 }: IProps) => {
+  const handleConfirmDelete = useCallback(
+    (id: IEmployee['id']) => {
+      Modal.confirm({
+        title: 'Delete Employee',
+        content: 'Are you sure you want to delete this employee?',
+        okText: 'Delete',
+        okType: 'danger',
+        onOk: () => onDeleteEmployee(id),
+        centered: true,
+        mask: { closable: true },
+        icon: null
+      });
+    },
+    [onDeleteEmployee]
+  );
+
   const columns: ColumnsType<IEmployee> = useMemo(() => {
     return [
       {
@@ -26,34 +42,27 @@ export const EmployeeTable = ({
         key: 'id',
         width: 100,
         defaultSortOrder: 'descend',
-        sorter: (a, b) => a.id - b.id,
-        shouldCellUpdate: (record, prevRecord) => record.id !== prevRecord.id
+        sorter: (a, b) => a.id - b.id
       },
       {
         title: 'Full Name',
         dataIndex: 'fullName',
         key: 'fullName',
-        sorter: (a, b) => a.fullName.localeCompare(b.fullName),
-        shouldCellUpdate: (record, prevRecord) =>
-          record.fullName !== prevRecord.fullName
+        sorter: (a, b) => a.fullName.localeCompare(b.fullName)
       },
       {
         title: 'Date Received',
         dataIndex: 'startDate',
         key: 'startDate',
         sorter: (a, b) => a.startDate.localeCompare(b.startDate),
-        render: (date: IEmployee['startDate']) => DateUtils.format(date),
-        shouldCellUpdate: (record, prevRecord) =>
-          record.startDate !== prevRecord.startDate
+        render: (date: IEmployee['startDate']) => DateUtils.format(date)
       },
       {
         title: 'Salary',
         dataIndex: 'salary',
         key: 'salary',
         sorter: (a, b) => a.salary - b.salary,
-        render: (salary: IEmployee['salary']) => `${salary.toLocaleString()} ₽`,
-        shouldCellUpdate: (record, prevRecord) =>
-          record.salary !== prevRecord.salary
+        render: (salary: IEmployee['salary']) => `${salary.toLocaleString()} ₽`
       },
       {
         title: 'Format',
@@ -64,15 +73,12 @@ export const EmployeeTable = ({
           <span style={{ color: isRemote ? 'green' : 'blue' }}>
             {isRemote ? 'Remote' : 'Office'}
           </span>
-        ),
-        shouldCellUpdate: (record, prevRecord) =>
-          record.isRemote !== prevRecord.isRemote
+        )
       },
       {
         title: 'Actions',
         key: 'actions',
         width: 150,
-        shouldCellUpdate: (record, prevRecord) => record !== prevRecord,
         render: (_, record) => (
           <Space size="middle">
             <Button
@@ -84,13 +90,13 @@ export const EmployeeTable = ({
               type="text"
               danger
               icon={<DeleteOutlined />}
-              onClick={() => onDeleteEmployee(record.id)}
+              onClick={() => handleConfirmDelete(record.id)}
             />
           </Space>
         )
       }
     ];
-  }, [onEditEmployee, onDeleteEmployee]);
+  }, [onEditEmployee, handleConfirmDelete]);
 
   return <CustomTable<IEmployee> dataSource={employees} columns={columns} />;
 };

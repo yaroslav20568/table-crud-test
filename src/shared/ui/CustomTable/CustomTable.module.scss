@@ -8,6 +8,9 @@
 
   :global {
     .ant-table-content {
+      overflow-x: auto;
+      min-width: 850px;
+
       @include customScrollbar;
     }
   }

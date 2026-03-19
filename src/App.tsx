@@ -101,6 +101,7 @@ export const App = () => {
           onOk={handleOk}
           onCancel={handleClose}
           okText={editingEmployee ? 'Edit' : 'Create'}
+          centered
         >
           <EmployeeForm form={form} onFinish={handleSubmit} />
         </Modal>
