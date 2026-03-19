@@ -10,7 +10,7 @@ import { CustomTable, DateUtils } from '@/shared';
 interface IProps {
   employees: Array<IEmployee>;
   onEditEmployee: (employee: IEmployee) => void;
-  onDeleteEmployee: (id: string) => void;
+  onDeleteEmployee: (id: IEmployee['id']) => void;
 }
 
 export const EmployeeTable = ({
@@ -26,7 +26,7 @@ export const EmployeeTable = ({
         key: 'id',
         width: 100,
         defaultSortOrder: 'descend',
-        sorter: (a, b) => Number(a.id) - Number(b.id),
+        sorter: (a, b) => a.id - b.id,
         shouldCellUpdate: (record, prevRecord) => record.id !== prevRecord.id
       },
       {

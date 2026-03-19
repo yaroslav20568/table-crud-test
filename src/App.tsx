@@ -66,12 +66,12 @@ export const App = () => {
     } else {
       const maxId =
         employees.length > 0
-          ? Math.max(...employees.map(employee => Number(employee.id)))
+          ? Math.max(...employees.map(employee => employee.id))
           : 0;
 
       const newEmployee: IEmployee = {
         ...formattedValues,
-        id: String(maxId + 1)
+        id: maxId + 1
       };
 
       createEmployee(newEmployee);
