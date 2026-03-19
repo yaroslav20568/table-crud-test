@@ -1,7 +1,10 @@
+import { EmployeeTable } from '@/entities';
+
 const App = () => {
   return (
     <>
-      <h1>Test Title</h1>
+      <h1>Employees</h1>
+      <EmployeeTable />
     </>
   );
 };
