@@ -36,28 +36,28 @@ export const EmployeeForm = ({ form, onFinish }: EmployeeFormProps) => {
       className={s.employeeForm}
     >
       <Form.Item<IEmployeeFormValues>
-        label="ФИО"
+        label="Full Name"
         name="fullName"
-        rules={[{ required: true, message: 'Введите ФИО' }]}
+        rules={[{ required: true, message: 'Is Required' }]}
       >
         <Input placeholder="Иванов Иван" />
       </Form.Item>
       <Form.Item<IEmployeeFormValues>
-        label="Дата приема"
+        label="Date Received"
         name="startDate"
-        rules={[{ required: true, message: 'Выберите Дату' }]}
+        rules={[{ required: true, message: 'Is Required' }]}
       >
         <DatePicker format={DEFAULT_FORMAT} className={s.fullWidth} />
       </Form.Item>
       <Form.Item<IEmployeeFormValues>
-        label="Зарплата"
+        label="Salary"
         name="salary"
-        rules={[{ required: true, message: 'Укажите Сумму' }]}
+        rules={[{ required: true, message: 'Is Required' }]}
       >
         <InputNumber min={0} className={s.fullWidth} />
       </Form.Item>
       <Form.Item<IEmployeeFormValues>
-        label="Удаленно"
+        label="Remote"
         name="isRemote"
         valuePropName="checked"
       >

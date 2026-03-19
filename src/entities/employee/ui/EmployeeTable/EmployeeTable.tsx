@@ -21,7 +21,16 @@ export const EmployeeTable = ({
   const columns: ColumnsType<IEmployee> = useMemo(() => {
     return [
       {
-        title: 'ФИО',
+        title: 'ID',
+        dataIndex: 'id',
+        key: 'id',
+        width: 80,
+        defaultSortOrder: 'descend',
+        sorter: (a, b) => Number(a.id) - Number(b.id),
+        shouldCellUpdate: (record, prevRecord) => record.id !== prevRecord.id
+      },
+      {
+        title: 'Full Name',
         dataIndex: 'fullName',
         key: 'fullName',
         sorter: (a, b) => a.fullName.localeCompare(b.fullName),
@@ -29,7 +38,7 @@ export const EmployeeTable = ({
           record.fullName !== prevRecord.fullName
       },
       {
-        title: 'Дата приема',
+        title: 'Date Received',
         dataIndex: 'startDate',
         key: 'startDate',
         sorter: (a, b) => a.startDate.localeCompare(b.startDate),
@@ -38,7 +47,7 @@ export const EmployeeTable = ({
           record.startDate !== prevRecord.startDate
       },
       {
-        title: 'Зарплата',
+        title: 'Salary',
         dataIndex: 'salary',
         key: 'salary',
         sorter: (a, b) => a.salary - b.salary,
@@ -47,20 +56,20 @@ export const EmployeeTable = ({
           record.salary !== prevRecord.salary
       },
       {
-        title: 'Формат',
+        title: 'Format',
         dataIndex: 'isRemote',
         key: 'isRemote',
         sorter: (a, b) => Number(a.isRemote) - Number(b.isRemote),
         render: (isRemote: IEmployee['isRemote']) => (
           <span style={{ color: isRemote ? 'green' : 'blue' }}>
-            {isRemote ? 'Удаленка' : 'Офис'}
+            {isRemote ? 'Remote' : 'Office'}
           </span>
         ),
         shouldCellUpdate: (record, prevRecord) =>
           record.isRemote !== prevRecord.isRemote
       },
       {
-        title: 'Действия',
+        title: 'Actions',
         key: 'actions',
         shouldCellUpdate: (record, prevRecord) => record !== prevRecord,
         render: (_, record) => (
