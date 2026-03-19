@@ -19,8 +19,14 @@ import '@/app/styles';
 
 export const App = () => {
   const [isOpen, openModal, closeModal] = useModal();
-  const { employees, createEmployee, deleteEmployee, updateEmployee } =
-    useEmployees();
+  const {
+    filteredEmployees,
+    searchQuery,
+    setSearchQuery,
+    createEmployee,
+    deleteEmployee,
+    updateEmployee
+  } = useEmployees();
   const [form] = Form.useForm<IEmployeeFormValues>();
   const [editingEmployee, setEditingEmployee] = useState<IEmployee | null>(
     null
@@ -58,8 +64,8 @@ export const App = () => {
       updateEmployee(editingEmployee.id, { ...formattedValues });
     } else {
       const maxId =
-        employees.length > 0
-          ? Math.max(...employees.map(emp => Number(emp.id)))
+        filteredEmployees.length > 0
+          ? Math.max(...filteredEmployees.map(employee => Number(employee.id)))
           : 0;
 
       const newEmployee: IEmployee = {
@@ -78,9 +84,13 @@ export const App = () => {
   return (
     <MainLayout>
       <TitleLayout title="Employees">
-        <EmployeeToolbar onCreate={openModal} />
+        <EmployeeToolbar
+          searchValue={searchQuery}
+          onSearch={setSearchQuery}
+          onCreate={openModal}
+        />
         <EmployeeTable
-          employees={employees}
+          employees={filteredEmployees}
           onDeleteEmployee={deleteEmployee}
           onEditEmployee={handleEdit}
         />

@@ -1,3 +1,4 @@
+import { PlusOutlined } from '@ant-design/icons';
 import { Button, Input } from 'antd';
 
 import { useScreens } from '@/shared';
@@ -5,10 +6,16 @@ import { useScreens } from '@/shared';
 import s from './EmployeeToolbar.module.scss';
 
 interface IProps {
+  searchValue: string;
+  onSearch: (value: string) => void;
   onCreate: () => void;
 }
 
-export const EmployeeToolbar = ({ onCreate }: IProps) => {
+export const EmployeeToolbar = ({
+  searchValue,
+  onSearch,
+  onCreate
+}: IProps) => {
   const { screens, isReady } = useScreens();
   const size = screens.lg ? 'large' : 'medium';
 
@@ -18,8 +25,20 @@ export const EmployeeToolbar = ({ onCreate }: IProps) => {
 
   return (
     <div className={s.employeeToolbar}>
-      <Input placeholder="Search" size={size} className={s.searchInput} />
-      <Button type="primary" size={size} onClick={onCreate}>
+      <Input
+        placeholder="Search"
+        size={size}
+        value={searchValue}
+        onChange={e => onSearch(e.target.value)}
+        allowClear
+        className={s.searchInput}
+      />
+      <Button
+        type="primary"
+        size={size}
+        icon={<PlusOutlined />}
+        onClick={onCreate}
+      >
         Create Employee
       </Button>
     </div>
