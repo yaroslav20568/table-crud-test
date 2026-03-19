@@ -1,0 +1,14 @@
+@use '@/app/styles/variables' as *;
+@use '@/app/styles/mixins' as *;
+
+.customTable {
+  overflow: auto;
+  border: 1px solid $gray-light;
+  border-radius: 20px;
+
+  :global {
+    .ant-table-content {
+      @include customScrollbar;
+    }
+  }
+}

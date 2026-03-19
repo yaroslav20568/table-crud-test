@@ -24,21 +24,27 @@ export const EmployeeTable = ({
         title: 'ФИО',
         dataIndex: 'fullName',
         key: 'fullName',
-        sorter: (a, b) => a.fullName.localeCompare(b.fullName)
+        sorter: (a, b) => a.fullName.localeCompare(b.fullName),
+        shouldCellUpdate: (record, prevRecord) =>
+          record.fullName !== prevRecord.fullName
       },
       {
         title: 'Дата приема',
         dataIndex: 'startDate',
         key: 'startDate',
         sorter: (a, b) => a.startDate.localeCompare(b.startDate),
-        render: (date: IEmployee['startDate']) => DateUtils.format(date)
+        render: (date: IEmployee['startDate']) => DateUtils.format(date),
+        shouldCellUpdate: (record, prevRecord) =>
+          record.startDate !== prevRecord.startDate
       },
       {
         title: 'Зарплата',
         dataIndex: 'salary',
         key: 'salary',
         sorter: (a, b) => a.salary - b.salary,
-        render: (salary: IEmployee['salary']) => `${salary.toLocaleString()} ₽`
+        render: (salary: IEmployee['salary']) => `${salary.toLocaleString()} ₽`,
+        shouldCellUpdate: (record, prevRecord) =>
+          record.salary !== prevRecord.salary
       },
       {
         title: 'Формат',
@@ -49,11 +55,14 @@ export const EmployeeTable = ({
           <span style={{ color: isRemote ? 'green' : 'blue' }}>
             {isRemote ? 'Удаленка' : 'Офис'}
           </span>
-        )
+        ),
+        shouldCellUpdate: (record, prevRecord) =>
+          record.isRemote !== prevRecord.isRemote
       },
       {
         title: 'Действия',
         key: 'actions',
+        shouldCellUpdate: (record, prevRecord) => record !== prevRecord,
         render: (_, record) => (
           <Space size="middle">
             <Button

@@ -85,12 +85,11 @@ export const App = () => {
           onEditEmployee={handleEdit}
         />
         <Modal
-          title={
-            editingEmployee ? 'Редактировать сотрудника' : 'Добавить сотрудника'
-          }
+          title={editingEmployee ? 'Edit Employee' : 'Create Employee'}
           open={isOpen}
           onOk={handleOk}
           onCancel={handleClose}
+          okText={editingEmployee ? 'Edit' : 'Create'}
         >
           <EmployeeForm form={form} onFinish={handleSubmit} />
         </Modal>

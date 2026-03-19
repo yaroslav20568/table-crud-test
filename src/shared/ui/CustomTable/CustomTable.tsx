@@ -4,6 +4,8 @@ import type { ColumnsType } from 'antd/es/table';
 
 import { withMemo } from '@/shared/utils';
 
+import s from './CustomTable.module.scss';
+
 interface IProps<T> {
   dataSource: Array<T>;
   columns: ColumnsType<T>;
@@ -18,9 +20,9 @@ const CustomTableComponent = <T extends Record<string, any>>({
 
   return (
     <Table
+      rowKey="id"
       dataSource={dataSource}
       columns={columns}
-      rowKey="id"
       pagination={{
         pageSize: pageSize,
         placement: ['bottomCenter'],
@@ -30,8 +32,11 @@ const CustomTableComponent = <T extends Record<string, any>>({
           setPageSize(size);
         }
       }}
+      scroll={{ x: 850 }}
+      className={s.customTable}
     />
   );
 };
+
 CustomTableComponent.displayName = 'CustomTable';
 export const CustomTable = withMemo(CustomTableComponent);
