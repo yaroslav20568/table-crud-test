@@ -1,5 +1,7 @@
 import { EmployeeTable } from '@/entities';
 
+import '@/app/styles/globals.scss';
+
 const App = () => {
   return (
     <>
