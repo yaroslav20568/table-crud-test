@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { Form, Modal } from 'antd';
+import dayjs from 'dayjs';
 
 import { MainLayout } from '@/app';
 
@@ -17,24 +19,55 @@ import '@/app/styles';
 
 export const App = () => {
   const [isOpen, openModal, closeModal] = useModal();
-  const { employees, addEmployee, deleteEmployee } = useEmployees();
+  const { employees, createEmployee, deleteEmployee, updateEmployee } =
+    useEmployees();
   const [form] = Form.useForm<IEmployeeFormValues>();
+  const [editingEmployee, setEditingEmployee] = useState<IEmployee | null>(
+    null
+  );
+
+  const handleEdit = (employee: IEmployee) => {
+    setEditingEmployee(employee);
+
+    form.setFieldsValue({
+      ...employee,
+      startDate: dayjs(employee.startDate)
+    });
+
+    openModal();
+  };
+
+  const handleClose = () => {
+    setEditingEmployee(null);
+
+    form.resetFields();
+
+    closeModal();
+  };
 
   const handleSubmit = (values: IEmployeeFormValues) => {
-    const maxId =
-      employees.length > 0
-        ? Math.max(...employees.map(emp => Number(emp.id)))
-        : 0;
-
-    const newEmployee: IEmployee = {
+    const formattedValues = {
       ...values,
-      id: String(maxId + 1),
-      startDate: DateUtils.format(values.startDate)
+      startDate: DateUtils.format(values.startDate, 'YYYY-MM-DD')
     };
 
-    addEmployee(newEmployee);
-    form.resetFields();
-    closeModal();
+    if (editingEmployee) {
+      updateEmployee(editingEmployee.id, { ...formattedValues });
+    } else {
+      const maxId =
+        employees.length > 0
+          ? Math.max(...employees.map(emp => Number(emp.id)))
+          : 0;
+
+      const newEmployee: IEmployee = {
+        ...formattedValues,
+        id: String(maxId + 1)
+      };
+
+      createEmployee(newEmployee);
+    }
+
+    handleClose();
   };
 
   return (
@@ -44,12 +77,15 @@ export const App = () => {
         <EmployeeTable
           employees={employees}
           onDeleteEmployee={deleteEmployee}
+          onEditEmployee={handleEdit}
         />
         <Modal
-          title="Добавить сотрудника"
+          title={
+            editingEmployee ? 'Редактировать сотрудника' : 'Добавить сотрудника'
+          }
           open={isOpen}
           onOk={() => form.submit()}
-          onCancel={closeModal}
+          onCancel={handleClose}
         >
           <EmployeeForm form={form} onFinish={handleSubmit} />
         </Modal>

@@ -6,6 +6,7 @@ import {
   InputNumber,
   Switch
 } from 'antd';
+import type dayjs from 'dayjs';
 
 import type { IEmployee } from '@/entities/employee/model';
 
@@ -17,7 +18,7 @@ export interface IEmployeeFormValues extends Omit<
   IEmployee,
   'id' | 'startDate'
 > {
-  startDate: Date;
+  startDate: dayjs.Dayjs;
 }
 
 interface EmployeeFormProps {
@@ -37,21 +38,21 @@ export const EmployeeForm = ({ form, onFinish }: EmployeeFormProps) => {
       <Form.Item<IEmployeeFormValues>
         label="ФИО"
         name="fullName"
-        rules={[{ required: true, message: 'Введите имя' }]}
+        rules={[{ required: true, message: 'Введите ФИО' }]}
       >
         <Input placeholder="Иванов Иван" />
       </Form.Item>
       <Form.Item<IEmployeeFormValues>
-        label="Дата начала работы"
+        label="Дата приема"
         name="startDate"
-        rules={[{ required: true, message: 'Выберите дату' }]}
+        rules={[{ required: true, message: 'Выберите Дату' }]}
       >
         <DatePicker format={DEFAULT_FORMAT} className={s.fullWidth} />
       </Form.Item>
       <Form.Item<IEmployeeFormValues>
         label="Зарплата"
         name="salary"
-        rules={[{ required: true, message: 'Укажите сумму' }]}
+        rules={[{ required: true, message: 'Укажите Сумму' }]}
       >
         <InputNumber min={0} className={s.fullWidth} />
       </Form.Item>

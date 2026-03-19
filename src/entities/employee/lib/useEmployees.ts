@@ -6,7 +6,7 @@ import type { IEmployee } from '@/entities/employee/model';
 export const useEmployees = () => {
   const [employees, setEmployees] = useState<Array<IEmployee>>(employeesData);
 
-  const addEmployee = useCallback((newEmployee: IEmployee) => {
+  const createEmployee = useCallback((newEmployee: IEmployee) => {
     setEmployees(prev => [...prev, newEmployee]);
   }, []);
 
@@ -27,7 +27,7 @@ export const useEmployees = () => {
 
   return {
     employees,
-    addEmployee,
+    createEmployee,
     updateEmployee,
     deleteEmployee
   };

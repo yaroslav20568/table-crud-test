@@ -9,10 +9,15 @@ import { CustomTable, DateUtils } from '@/shared';
 
 interface IProps {
   employees: Array<IEmployee>;
+  onEditEmployee: (employee: IEmployee) => void;
   onDeleteEmployee: (id: string) => void;
 }
 
-export const EmployeeTable = ({ employees, onDeleteEmployee }: IProps) => {
+export const EmployeeTable = ({
+  employees,
+  onEditEmployee,
+  onDeleteEmployee
+}: IProps) => {
   const columns: ColumnsType<IEmployee> = useMemo(() => {
     return [
       {
@@ -54,7 +59,7 @@ export const EmployeeTable = ({ employees, onDeleteEmployee }: IProps) => {
             <Button
               type="text"
               icon={<EditOutlined />}
-              onClick={() => console.log('Edit', record.id)}
+              onClick={() => onEditEmployee(record)}
             />
             <Button
               type="text"
@@ -66,7 +71,7 @@ export const EmployeeTable = ({ employees, onDeleteEmployee }: IProps) => {
         )
       }
     ];
-  }, [onDeleteEmployee]);
+  }, [onEditEmployee, onDeleteEmployee]);
 
   return <CustomTable<IEmployee> dataSource={employees} columns={columns} />;
 };
