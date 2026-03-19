@@ -24,7 +24,7 @@ export const EmployeeTable = ({
         title: 'ID',
         dataIndex: 'id',
         key: 'id',
-        width: 80,
+        width: 100,
         defaultSortOrder: 'descend',
         sorter: (a, b) => Number(a.id) - Number(b.id),
         shouldCellUpdate: (record, prevRecord) => record.id !== prevRecord.id
@@ -71,6 +71,7 @@ export const EmployeeTable = ({
       {
         title: 'Actions',
         key: 'actions',
+        width: 150,
         shouldCellUpdate: (record, prevRecord) => record !== prevRecord,
         render: (_, record) => (
           <Space size="middle">
