@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Form, Modal } from 'antd';
 import dayjs from 'dayjs';
 
@@ -26,16 +26,19 @@ export const App = () => {
     null
   );
 
-  const handleEdit = (employee: IEmployee) => {
-    setEditingEmployee(employee);
+  const handleEdit = useCallback(
+    (employee: IEmployee) => {
+      setEditingEmployee(employee);
 
-    form.setFieldsValue({
-      ...employee,
-      startDate: dayjs(employee.startDate)
-    });
+      form.setFieldsValue({
+        ...employee,
+        startDate: dayjs(employee.startDate)
+      });
 
-    openModal();
-  };
+      openModal();
+    },
+    [form, openModal]
+  );
 
   const handleClose = () => {
     setEditingEmployee(null);
@@ -70,6 +73,8 @@ export const App = () => {
     handleClose();
   };
 
+  const handleOk = () => form.submit();
+
   return (
     <MainLayout>
       <TitleLayout title="Employees">
@@ -84,7 +89,7 @@ export const App = () => {
             editingEmployee ? 'Редактировать сотрудника' : 'Добавить сотрудника'
           }
           open={isOpen}
-          onOk={() => form.submit()}
+          onOk={handleOk}
           onCancel={handleClose}
         >
           <EmployeeForm form={form} onFinish={handleSubmit} />
