@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 
-const DEFAULT_FORMAT = 'DD.MM.YYYY';
+export const DEFAULT_FORMAT = 'DD.MM.YYYY';
 
 export class DateUtils {
   static format(

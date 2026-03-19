@@ -14,7 +14,7 @@ const CustomTableComponent = <T extends Record<string, any>>({
   dataSource,
   columns
 }: IProps<T>) => {
-  const [pageSize, setPageSize] = useState(5);
+  const [pageSize, setPageSize] = useState<number>(5);
 
   return (
     <Table
