@@ -55,6 +55,7 @@ export const useEmployees = () => {
   }, [employees, debouncedSearchQuery]);
 
   return {
+    employees,
     filteredEmployees,
     searchQuery,
     setSearchQuery,

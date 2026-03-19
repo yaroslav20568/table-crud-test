@@ -40,7 +40,7 @@ export const EmployeeForm = ({ form, onFinish }: EmployeeFormProps) => {
         name="fullName"
         rules={[{ required: true, message: 'Is Required' }]}
       >
-        <Input placeholder="Иванов Иван" />
+        <Input placeholder="Ivanov Ivan" />
       </Form.Item>
       <Form.Item<IEmployeeFormValues>
         label="Date Received"

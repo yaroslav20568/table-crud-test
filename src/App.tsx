@@ -20,6 +20,7 @@ import '@/app/styles';
 export const App = () => {
   const [isOpen, openModal, closeModal] = useModal();
   const {
+    employees,
     filteredEmployees,
     searchQuery,
     setSearchQuery,
@@ -64,8 +65,8 @@ export const App = () => {
       updateEmployee(editingEmployee.id, { ...formattedValues });
     } else {
       const maxId =
-        filteredEmployees.length > 0
-          ? Math.max(...filteredEmployees.map(employee => Number(employee.id)))
+        employees.length > 0
+          ? Math.max(...employees.map(employee => Number(employee.id)))
           : 0;
 
       const newEmployee: IEmployee = {
