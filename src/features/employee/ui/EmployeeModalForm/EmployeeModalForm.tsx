@@ -82,6 +82,7 @@ export const EmployeeModalForm = ({
       onCancel={onClose}
       okText={editingEmployee ? 'Edit' : 'Create'}
       centered
+      forceRender
     >
       <Form
         form={form}
