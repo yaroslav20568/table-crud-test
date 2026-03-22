@@ -4,6 +4,7 @@
 .customTable {
   border: 1px solid $gray-light;
   border-radius: 20px;
+  overflow: hidden;
 
   :global {
     .ant-table-content {
