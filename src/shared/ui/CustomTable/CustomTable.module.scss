@@ -2,16 +2,16 @@
 @use '@/app/styles/mixins' as *;
 
 .customTable {
-  overflow: auto;
   border: 1px solid $gray-light;
   border-radius: 20px;
 
   :global {
     .ant-table-content {
       overflow-x: auto;
-      min-width: 850px;
-
       @include customScrollbar;
+    }
+    table {
+      min-width: 850px;
     }
   }
 }

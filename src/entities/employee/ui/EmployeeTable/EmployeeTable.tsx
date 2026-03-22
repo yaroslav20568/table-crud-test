@@ -3,6 +3,7 @@ import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { Button, Modal, Space } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 
+import { currency } from '@/entities/employee/const';
 import { type IEmployee } from '@/entities/employee/model';
 
 import { CustomTable, DateUtils } from '@/shared';
@@ -62,7 +63,8 @@ export const EmployeeTable = ({
         dataIndex: 'salary',
         key: 'salary',
         sorter: (a, b) => a.salary - b.salary,
-        render: (salary: IEmployee['salary']) => `${salary.toLocaleString()} ₽`
+        render: (salary: IEmployee['salary']) =>
+          `${salary.toLocaleString()} ${currency}`
       },
       {
         title: 'Format',

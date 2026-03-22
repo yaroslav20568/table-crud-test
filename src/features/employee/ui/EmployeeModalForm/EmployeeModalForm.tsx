@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
 import { DatePicker, Form, Input, InputNumber, Modal, Switch } from 'antd';
 import dayjs from 'dayjs';
 
 import { type IEmployee } from '@/entities';
+import { currency } from '@/entities/employee/const';
 
 import { DateUtils, DEFAULT_FORMAT } from '@/shared';
 
@@ -34,18 +34,16 @@ export const EmployeeModalForm = ({
 }: IProps) => {
   const [form] = Form.useForm<IEmployeeFormValues>();
 
-  useEffect(() => {
-    if (isOpen) {
-      if (editingEmployee) {
-        form.setFieldsValue({
-          ...editingEmployee,
-          startDate: dayjs(editingEmployee.startDate)
-        });
-      } else {
-        form.resetFields();
+  const initialValues: Partial<IEmployeeFormValues> = editingEmployee
+    ? {
+        ...editingEmployee,
+        startDate: dayjs(editingEmployee.startDate)
       }
-    }
-  }, [isOpen, editingEmployee, form]);
+    : {
+        startDate: dayjs(),
+        salary: 0,
+        isRemote: false
+      };
 
   const handleSubmit = (values: IEmployeeFormValues) => {
     const formattedValues = {
@@ -75,12 +73,14 @@ export const EmployeeModalForm = ({
       onCancel={onClose}
       okText={editingEmployee ? 'Edit' : 'Create'}
       centered
+      destroyOnHidden
     >
       <Form
         form={form}
         layout="vertical"
         onFinish={handleSubmit}
-        initialValues={{ isRemote: false }}
+        initialValues={initialValues}
+        preserve={false}
         className={s.employeeForm}
       >
         <Form.Item<IEmployeeFormValues>
@@ -102,7 +102,15 @@ export const EmployeeModalForm = ({
           name="salary"
           rules={[{ required: true, message: 'Is Required' }]}
         >
-          <InputNumber min={0} className={s.fullWidth} />
+          <InputNumber<number>
+            min={0}
+            suffix={currency}
+            formatter={value =>
+              `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+            }
+            parser={value => Number(value?.replace(/\D/g, ''))}
+            className={s.fullWidth}
+          />
         </Form.Item>
         <Form.Item<IEmployeeFormValues>
           label="Remote"

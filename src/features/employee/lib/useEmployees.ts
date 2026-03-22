@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 
-import { employeesData } from '@/entities/employee/const';
+import { currency, employeesData } from '@/entities/employee/const';
 import type { IEmployee } from '@/entities/employee/model';
 
 import { DateUtils, useDebounceValue } from '@/shared';
@@ -37,8 +37,15 @@ export const useEmployees = () => {
   }, []);
 
   const filteredEmployees = useMemo(() => {
-    const query = debouncedSearchQuery.trim().toLowerCase().replace(/[₽]/g, '');
-    if (!query && debouncedSearchQuery.trim() !== '₽') return employees;
+    const currencyRegExp = new RegExp(`[${currency}]`, 'g');
+    const query = debouncedSearchQuery
+      .trim()
+      .toLowerCase()
+      .replace(currencyRegExp, '');
+
+    if (!query && debouncedSearchQuery.trim() !== currency) return employees;
+
+    if (!query && debouncedSearchQuery.trim() !== currency) return employees;
 
     return employees.filter(employee => {
       const queryWithoutSpaces = query.replace(/\s/g, '');
@@ -48,7 +55,7 @@ export const useEmployees = () => {
       const format = employee.isRemote ? 'remote' : 'office';
       const formattedDate = DateUtils.format(employee.startDate).toLowerCase();
 
-      if (debouncedSearchQuery.trim() === '₽') return true;
+      if (debouncedSearchQuery.trim() === currency) return true;
 
       return (
         fullName.includes(query) ||
