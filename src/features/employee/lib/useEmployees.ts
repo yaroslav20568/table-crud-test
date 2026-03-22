@@ -1,7 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 
-import { currency, employeesData } from '@/entities/employee/const';
-import type { IEmployee } from '@/entities/employee/model';
+import { currency, employeesData, type IEmployee } from '@/entities';
 
 import { DateUtils, useDebounceValue } from '@/shared';
 
