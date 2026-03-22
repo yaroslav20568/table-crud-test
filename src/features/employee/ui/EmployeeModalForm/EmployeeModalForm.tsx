@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { DatePicker, Form, Input, InputNumber, Modal, Switch } from 'antd';
 import dayjs from 'dayjs';
 
@@ -7,6 +8,12 @@ import { currency } from '@/entities/employee/const';
 import { DateUtils, DEFAULT_FORMAT } from '@/shared';
 
 import s from './EmployeeModalForm.module.scss';
+
+const initialValues: Partial<IEmployeeFormValues> = {
+  startDate: dayjs(),
+  salary: 0,
+  isRemote: false
+};
 
 export interface IEmployeeFormValues extends Omit<
   IEmployee,
@@ -34,16 +41,18 @@ export const EmployeeModalForm = ({
 }: IProps) => {
   const [form] = Form.useForm<IEmployeeFormValues>();
 
-  const initialValues: Partial<IEmployeeFormValues> = editingEmployee
-    ? {
-        ...editingEmployee,
-        startDate: dayjs(editingEmployee.startDate)
+  useEffect(() => {
+    if (isOpen) {
+      if (editingEmployee) {
+        form.setFieldsValue({
+          ...editingEmployee,
+          startDate: dayjs(editingEmployee.startDate)
+        });
+      } else {
+        form.resetFields();
       }
-    : {
-        startDate: dayjs(),
-        salary: 0,
-        isRemote: false
-      };
+    }
+  }, [isOpen, editingEmployee, form]);
 
   const handleSubmit = (values: IEmployeeFormValues) => {
     const formattedValues = {
@@ -73,7 +82,6 @@ export const EmployeeModalForm = ({
       onCancel={onClose}
       okText={editingEmployee ? 'Edit' : 'Create'}
       centered
-      destroyOnHidden
     >
       <Form
         form={form}
