@@ -11,6 +11,12 @@ export const useEmployees = () => {
 
   const debouncedSearchQuery = useDebounceValue(searchQuery, 300);
 
+  const nextId = useMemo(
+    () =>
+      employees.length > 0 ? Math.max(...employees.map(e => e.id)) + 1 : 1,
+    [employees]
+  );
+
   const createEmployee = useCallback((newEmployee: IEmployee) => {
     setEmployees(prev => [...prev, newEmployee]);
   }, []);
@@ -55,9 +61,9 @@ export const useEmployees = () => {
   }, [employees, debouncedSearchQuery]);
 
   return {
-    employees,
     filteredEmployees,
     searchQuery,
+    nextId,
     setSearchQuery,
     createEmployee,
     updateEmployee,

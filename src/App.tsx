@@ -1,85 +1,42 @@
 import { useCallback, useState } from 'react';
-import { Form, Modal } from 'antd';
-import dayjs from 'dayjs';
 
 import { MainLayout } from '@/app';
 
-import {
-  EmployeeForm,
-  type IEmployeeFormValues,
-  useEmployees
-} from '@/features';
+import { EmployeeModalForm, useEmployees } from '@/features';
 
 import { EmployeeTable, EmployeeToolbar, type IEmployee } from '@/entities';
 
-import { DateUtils, TitleLayout, useModal } from '@/shared';
+import { TitleLayout, useModal } from '@/shared';
 
 import '@/app/styles';
 
 export const App = () => {
+  const [editingEmployee, setEditingEmployee] = useState<IEmployee | null>(
+    null
+  );
   const [isOpen, openModal, closeModal] = useModal();
   const {
-    employees,
     filteredEmployees,
     searchQuery,
+    nextId,
     setSearchQuery,
     createEmployee,
     deleteEmployee,
     updateEmployee
   } = useEmployees();
-  const [form] = Form.useForm<IEmployeeFormValues>();
-  const [editingEmployee, setEditingEmployee] = useState<IEmployee | null>(
-    null
-  );
 
   const handleEdit = useCallback(
     (employee: IEmployee) => {
       setEditingEmployee(employee);
-
-      form.setFieldsValue({
-        ...employee,
-        startDate: dayjs(employee.startDate)
-      });
-
       openModal();
     },
-    [form, openModal]
+    [openModal]
   );
 
   const handleClose = () => {
     setEditingEmployee(null);
-
-    form.resetFields();
-
     closeModal();
   };
-
-  const handleSubmit = (values: IEmployeeFormValues) => {
-    const formattedValues = {
-      ...values,
-      startDate: DateUtils.format(values.startDate, 'YYYY-MM-DD')
-    };
-
-    if (editingEmployee) {
-      updateEmployee(editingEmployee.id, { ...formattedValues });
-    } else {
-      const maxId =
-        employees.length > 0
-          ? Math.max(...employees.map(employee => employee.id))
-          : 0;
-
-      const newEmployee: IEmployee = {
-        ...formattedValues,
-        id: maxId + 1
-      };
-
-      createEmployee(newEmployee);
-    }
-
-    handleClose();
-  };
-
-  const handleOk = () => form.submit();
 
   return (
     <MainLayout>
@@ -94,16 +51,14 @@ export const App = () => {
           onDeleteEmployee={deleteEmployee}
           onEditEmployee={handleEdit}
         />
-        <Modal
-          title={editingEmployee ? 'Edit Employee' : 'Create Employee'}
-          open={isOpen}
-          onOk={handleOk}
-          onCancel={handleClose}
-          okText={editingEmployee ? 'Edit' : 'Create'}
-          centered
-        >
-          <EmployeeForm form={form} onFinish={handleSubmit} />
-        </Modal>
+        <EmployeeModalForm
+          isOpen={isOpen}
+          onClose={handleClose}
+          editingEmployee={editingEmployee}
+          onCreate={createEmployee}
+          onUpdate={updateEmployee}
+          nextId={nextId}
+        />
       </TitleLayout>
     </MainLayout>
   );
