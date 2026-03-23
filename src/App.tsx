@@ -34,8 +34,11 @@ export const App = () => {
   );
 
   const handleClose = () => {
-    setEditingEmployee(null);
     closeModal();
+  };
+
+  const handleAfterClose = () => {
+    setEditingEmployee(null);
   };
 
   return (
@@ -54,6 +57,7 @@ export const App = () => {
         <EmployeeModalForm
           isOpen={isOpen}
           onClose={handleClose}
+          onAfterClose={handleAfterClose}
           editingEmployee={editingEmployee}
           onCreate={createEmployee}
           onUpdate={updateEmployee}

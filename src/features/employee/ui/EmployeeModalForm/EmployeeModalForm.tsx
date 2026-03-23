@@ -25,6 +25,7 @@ export interface IEmployeeFormValues extends Omit<
 interface IProps {
   isOpen: boolean;
   onClose: () => void;
+  onAfterClose: () => void;
   editingEmployee: IEmployee | null;
   onCreate: (employee: IEmployee) => void;
   onUpdate: (id: IEmployee['id'], data: Partial<IEmployee>) => void;
@@ -34,6 +35,7 @@ interface IProps {
 export const EmployeeModalForm = ({
   isOpen,
   onClose,
+  onAfterClose,
   editingEmployee,
   onCreate,
   onUpdate,
@@ -83,6 +85,7 @@ export const EmployeeModalForm = ({
       okText={editingEmployee ? 'Edit' : 'Create'}
       centered
       forceRender
+      afterClose={onAfterClose}
     >
       <Form
         form={form}
